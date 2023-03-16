@@ -14,7 +14,7 @@ class Terminal {
       prompt = '',
       separator = '&gt;',
     } = props;
-    this.commands = Object.assign({}, commands, COMMANDS);
+    this.commands = Object.assign({}, COMMANDS, commands);
     this.history = localStorage[KEY] ? JSON.parse(localStorage[KEY]) : [];
     this.historyCursor = this.history.length;
     this.welcome = welcome;
