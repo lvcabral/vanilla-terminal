@@ -113,13 +113,15 @@ class Terminal {
     DOM.input.value = '';
 
     // Dispatch command
+    let handled = false;
     if (Object.keys(commands).includes(command)) {
       const callback = commands[command];
-      if (callback) callback(this, parameters);
-      if (onInputCallback) onInputCallback(command, parameters);
-    } else {
-      this.output(`<u>${command}</u>: command not found.`);
+      if (callback) {
+        callback(this, parameters);
+        handled = true; 
+      }
     }
+    if (onInputCallback) onInputCallback(command, parameters, handled);
   }
 
   resetCommand = () => {
@@ -130,7 +132,6 @@ class Terminal {
     DOM.command.classList.remove('hidden');
     if (DOM.input.scrollIntoView) DOM.input.scrollIntoView();
   }
-
 
   clear() {
     this.DOM.output.innerHTML = '';
@@ -144,7 +145,7 @@ class Terminal {
     DOM.prompt.innerHTML = '<div class="spinner"></div>';
   }
 
-  prompt(prompt, callback = () => {}) {
+  prompt(prompt, callback = () => { }) {
     this.state.prompt = true;
     this.onAskCallback = callback;
     this.DOM.prompt.innerHTML = `${prompt}:`;
