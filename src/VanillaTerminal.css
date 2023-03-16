@@ -19,7 +19,7 @@
     overflow-y: scroll;
   }
     .VanillaTerm .container ::selection {
-      background-color: #f3e5ab;
+      background-color: #1e496c;
       text-shadow: none !important;
     }
 
@@ -43,7 +43,7 @@
       }
 
     .VanillaTerm .prompt, .VanillaTerm a {
-      color: #f3e5ab;
+      color: #449DFF;
       font-weight: bold;
     }
 
