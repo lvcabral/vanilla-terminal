@@ -60,11 +60,11 @@ class Terminal {
     DOM.input.addEventListener('keydown', this.onKeyDown, false);
     DOM.command.addEventListener('click', () => DOM.input.focus(), false);
 
-    addEventListener('keyup', (event) => {
-      DOM.input.focus();
-      event.stopPropagation();
-      event.preventDefault();
-    }, false);
+    // addEventListener('keyup', (event) => {
+    //   DOM.input.focus();
+    //   event.stopPropagation();
+    //   event.preventDefault();
+    // }, false);
   }
 
   onKeyUp = (event) => {
