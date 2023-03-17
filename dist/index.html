@@ -46,8 +46,8 @@
         separator: '$',
       });
 
-      term.onInput((command, parameters) => {
-        console.log('⚡️onInput', command, parameters);
+      term.onInput((command, parameters, handled) => {
+        console.log('⚡️onInput', command, parameters, handled);
       });
 
       term.prompt('Your name', (name) => {

@@ -13,17 +13,20 @@ class Terminal {
       welcome = 'Welcome to <a href="">Vanilla</a> terminal.',
       prompt = '',
       separator = '&gt;',
+      ignoreBadCommand = false,
+      autoFocus = true,
     } = props;
     this.commands = Object.assign({}, COMMANDS, commands);
     this.history = localStorage[KEY] ? JSON.parse(localStorage[KEY]) : [];
     this.historyCursor = this.history.length;
     this.welcome = welcome;
     this.shell = { prompt, separator };
+    this.ignoreBadCommand = ignoreBadCommand;
 
     const el = document.getElementById(container);
     if (el) {
       this.cacheDOM(el);
-      this.addListeners();
+      this.addListeners(autoFocus);
       if (welcome) this.output(welcome);
     } else throw Error(`Container #${container} doesn't exists.`);
   }
@@ -48,23 +51,26 @@ class Terminal {
     };
   }
 
-  addListeners = () => {
+  addListeners = (autoFocus) => {
     const { DOM } = this;
     DOM.output.addEventListener('DOMSubtreeModified', () => {
       setTimeout(() => DOM.input.scrollIntoView(), 10);
     }, false);
 
-    //addEventListener('click', () => DOM.input.focus(), false);
     DOM.output.addEventListener('click', event => event.stopPropagation(), false);
     DOM.input.addEventListener('keyup', this.onKeyUp, false);
     DOM.input.addEventListener('keydown', this.onKeyDown, false);
     DOM.command.addEventListener('click', () => DOM.input.focus(), false);
 
-    // addEventListener('keyup', (event) => {
-    //   DOM.input.focus();
-    //   event.stopPropagation();
-    //   event.preventDefault();
-    // }, false);
+    if (autoFocus) {
+      addEventListener('click', () => DOM.input.focus(), false);
+
+      addEventListener('keyup', (event) => {
+        DOM.input.focus();
+        event.stopPropagation();
+        event.preventDefault();
+      }, false);  
+    }
   }
 
   onKeyUp = (event) => {
@@ -120,6 +126,8 @@ class Terminal {
         callback(this, parameters);
         handled = true; 
       }
+    } else if (!this.ignoreBadCommand) {
+      this.output(`<u>${command}</u>: command not found.`);
     }
     if (onInputCallback) onInputCallback(command, parameters, handled);
   }
