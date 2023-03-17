@@ -143,6 +143,9 @@ class Terminal {
 
   clear() {
     this.DOM.output.innerHTML = '';
+    if (!this.state.idle) {
+      this.DOM.input.focus();
+    }
     this.resetCommand();
   }
 
