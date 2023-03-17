@@ -54,7 +54,7 @@ class Terminal {
       setTimeout(() => DOM.input.scrollIntoView(), 10);
     }, false);
 
-    addEventListener('click', () => DOM.input.focus(), false);
+    //addEventListener('click', () => DOM.input.focus(), false);
     DOM.output.addEventListener('click', event => event.stopPropagation(), false);
     DOM.input.addEventListener('keyup', this.onKeyUp, false);
     DOM.input.addEventListener('keydown', this.onKeyDown, false);
