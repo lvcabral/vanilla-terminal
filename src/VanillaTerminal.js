@@ -22,11 +22,12 @@ class Terminal {
     this.welcome = welcome;
     this.shell = { prompt, separator };
     this.ignoreBadCommand = ignoreBadCommand;
+    this.autoFocus = autoFocus;
 
     const el = document.getElementById(container);
     if (el) {
       this.cacheDOM(el);
-      this.addListeners(autoFocus);
+      this.addListeners();
       if (welcome) this.output(welcome);
     } else throw Error(`Container #${container} doesn't exists.`);
   }
@@ -51,8 +52,8 @@ class Terminal {
     };
   }
 
-  addListeners = (autoFocus) => {
-    const { DOM } = this;
+  addListeners = () => {
+    const { DOM, autoFocus } = this;
     DOM.output.addEventListener('DOMSubtreeModified', () => {
       setTimeout(() => DOM.input.scrollIntoView(), 10);
     }, false);
