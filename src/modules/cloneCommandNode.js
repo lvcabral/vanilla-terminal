@@ -4,7 +4,7 @@ export default (el) => {
 
   input.autofocus = false;
   input.readOnly = true;
-  input.insertAdjacentHTML('beforebegin', input.value);
+  input.insertAdjacentHTML('beforebegin', `<p>${input.value}</p>`);
   input.parentNode.removeChild(input);
   line.classList.add('line');
 
